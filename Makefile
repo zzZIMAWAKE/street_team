@@ -6,6 +6,10 @@ test:
 install:
 	python3 -m venv $(VENV) && \
 	$(VENV)/bin/pip install -r requirements.txt
+	$(VENV)/bin/alembic upgrade head
+
+setup_db:
+	$(VENV)/bin/python3 src/setup.py
 
 rabbit:
 	docker-compose up rabbit

@@ -1,7 +1,7 @@
 import unittest
 
-from ..rewards.rewards_engine import RewardsEngine
-from ..queue.queue_service import QueueService
+from src.queue.queue_service import QueueService
+from src.rewards.rewards_engine import RewardsEngine
 
 
 class TestRewardsEngine(unittest.TestCase):

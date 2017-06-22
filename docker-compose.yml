@@ -9,3 +9,17 @@ services:
     volumes:
       - ./rabbitmq/definitions.json:/opt/definitions.json:ro
       - ./rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+
+  PostgreSQL:
+      restart: always
+      image: "sameersbn/postgresql:9.6-2"
+      ports:
+        - "5432:5432"
+      environment:
+        - DEBUG=false
+
+        - DB_USER=admin
+        - DB_PASS=hunter2
+        - DB_NAME=backend
+      volumes:
+        - /srv/docker/postgresql:/var/lib/postgresql

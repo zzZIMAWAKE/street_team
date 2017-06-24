@@ -13,3 +13,4 @@ class RewardsEngine(object):
 
     def on_message(self, body):
         LOGGER.info('REWARDS ENGINE message %s', body)
+        print(body)

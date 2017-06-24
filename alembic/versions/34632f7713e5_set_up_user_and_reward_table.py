@@ -1,4 +1,4 @@
-"""Set up sale, user, item and reward table
+"""Set up user, and reward table
 
 Revision ID: 34632f7713e5
 Revises: 
@@ -24,13 +24,10 @@ def upgrade():
     op.create_table(
         'user',
         sa.Column('id', sa.BigInteger(), nullable=False),
+        sa.Column('points', sa.Integer(), nullable=False, server_default=0),
         sa.PrimaryKeyConstraint('id')
     )
-    op.create_table(
-        'item',
-        sa.Column('id', sa.BigInteger(), nullable=False),
-        sa.PrimaryKeyConstraint('id')
-    )
+
     op.create_table(
         'reward',
         sa.Column('id', sa.BigInteger(), nullable=False),
@@ -41,17 +38,7 @@ def upgrade():
         sa.Column('global_max', sa.Integer(), nullable=True),
         sa.PrimaryKeyConstraint('id')
     )
-    op.create_table(
-        'sale',
-        sa.Column('id', sa.BigInteger(), nullable=False),
-        sa.Column('item_id', sa.BigInteger(), nullable=False),
-        sa.Column('cost', sa.Float(), nullable=False),
-        sa.Column('currency', sa.String(), server_default='GBP', nullable=False),
-        sa.Column('user_id', sa.BigInteger()),
-        sa.PrimaryKeyConstraint('id'),
-        sa.ForeignKeyConstraint(['user_id'], ['user.id']),
-        sa.ForeignKeyConstraint(['item_id'], ['item.id'])
-    )
+
     rewards = [
         {"name": "General Ticket", "category": '1', "points": '100', "max_per_user": '5', "global_max": '1000'},
         {"name": "VIP Ticket", "category": '1', "points": '1000', "max_per_user": '1', "global_max": '50'},
@@ -76,9 +63,6 @@ def upgrade():
 
     for user_id in user_ids:
         conn.execute('INSERT INTO "user" (id) VALUES ({})'.format(user_id))
-
-    for item_id in range(1, 20):
-        conn.execute('INSERT INTO item (id) VALUES ({})'.format(item_id))
 
 
 def downgrade():

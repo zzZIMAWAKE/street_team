@@ -4,7 +4,7 @@ import pika
 LOGGER = logging.getLogger(__name__)
 
 
-class QueueService(object):
+class QueueService:
     EXCHANGE = None
     QUEUE = None
     EXCHANGE_TYPE = 'direct'
@@ -151,7 +151,7 @@ class QueueService(object):
         self._callback = callback
 
     def on_message(self, channel, basic_deliver, properties, body):
-        LOGGER.debug('Received message # %s from %s: %s',
+        LOGGER.info('Received message # %s from %s: %s',
                     basic_deliver.delivery_tag, properties.app_id, body)
 
         if self._callback:
@@ -165,6 +165,8 @@ class QueueService(object):
         routing_key = self.QUEUE
         properties = self.DEFAULT_MESSAGE_PROPERTY
         mandatory = True
+
+        LOGGER.info('Generated message %s', body)
 
         if self._channel.basic_publish(exchange, routing_key, body, properties, mandatory):
             return True

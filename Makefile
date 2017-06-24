@@ -1,7 +1,7 @@
 VENV ?= ./.virtualenv
 
 test:
-	$(VENV)/bin/python3 -m unittest
+	$(VENV)/bin/nosetests
 
 install:
 	python3 -m venv $(VENV) && \

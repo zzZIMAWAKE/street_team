@@ -1,4 +1,4 @@
-"""Set up user, and reward table
+"""Set up user and reward table
 
 Revision ID: 34632f7713e5
 Revises: 
@@ -24,7 +24,7 @@ def upgrade():
     op.create_table(
         'user',
         sa.Column('id', sa.BigInteger(), nullable=False),
-        sa.Column('points', sa.Integer(), nullable=False, server_default=0),
+        sa.Column('points', sa.Integer(), nullable=False, server_default='0'),
         sa.PrimaryKeyConstraint('id')
     )
 

@@ -151,7 +151,7 @@ class QueueService:
         self._callback = callback
 
     def on_message(self, channel, basic_deliver, properties, body):
-        LOGGER.info('Received message # %s from %s: %s',
+        LOGGER.debug('Received message # %s from %s: %s',
                     basic_deliver.delivery_tag, properties.app_id, body)
 
         if self._callback:
@@ -165,8 +165,6 @@ class QueueService:
         routing_key = self.QUEUE
         properties = self.DEFAULT_MESSAGE_PROPERTY
         mandatory = True
-
-        LOGGER.info('Generated message %s', body)
 
         if self._channel.basic_publish(exchange, routing_key, body, properties, mandatory):
             return True

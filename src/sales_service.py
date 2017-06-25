@@ -45,7 +45,7 @@ class SalesService(QueueService):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-    service = SalesService('amqp://guest:guest@192.168.99.100:5672/', 'sales', 'sales')
+    service = SalesService('amqp://guest:guest@localhost:5672/', 'sales', 'sales')
     try:
         service.run()
     except KeyboardInterrupt:

@@ -2,13 +2,13 @@
 
 * I created a database for easy storage of the data and to keep data persistent, the next steps in this project
   will ultimately require persistent storage, so I thought it was beneficial
-  to implement as it seems highly likely to be required further down the line. Here are a few examples of where I feel
+  to implement as it seems highly likely to be required in the future. Here are a few examples of where I feel
   persistent data storage will be required in the future of this project:
 
    * to keep track of points
+   * to enable users to spend their points
    * to keep track of global uses
    * to keep track of users claimed rewards
-   * to enable users to spend their points
 
 * Currently global max uses is not considered as no one is actually purchasing any rewards,
   just being given recommendations, future improvements will probably include purchases,

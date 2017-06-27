@@ -1,22 +1,19 @@
 import logging
 import json
-from sqlalchemy import desc
-from models.user import User
-from models.reward import Reward
 from db import Session
+from models.user import User
 
 
 LOGGER = logging.getLogger(__name__)
 
 
 class RewardsEngine:
-    def __init__(self, queue_service):
-        session = Session()
+    def __init__(self, queue_service, rewards):
         self._queue_service = queue_service
-        self._rewards = session.query(Reward).order_by(desc(Reward.points)).all()
+        self._rewards = rewards
 
-    def points_from_purchase(self, price):
-        return price * 10
+    def points_from_cost(self, cost):
+        return cost * 10
 
     def on_message(self, body):
         session = Session()
@@ -25,7 +22,7 @@ class RewardsEngine:
         body = json.loads(body)
         user = session.query(User).filter(User.id == body['user_id']).first()
 
-        user.points += self.points_from_purchase(body['cost'])
+        user.points += self.points_from_cost(body['cost'])
         session.commit()
 
         recommended_rewards = self.calculate_recommended_rewards(user)
@@ -36,10 +33,14 @@ class RewardsEngine:
         }, ensure_ascii=False))
 
     def calculate_recommended_rewards(self, user):
-        recommended_rewards = {}
+        recommended_rewards = []
         for reward in self._rewards:
             if user.points >= reward.points:
-                recommended_rewards[reward.name] = self._calculate_max_reward_count(user, reward)
+                for i in range(self._calculate_max_reward_count(user, reward)):
+                    recommended_rewards.append({
+                        'name': reward.name,
+                        'points': reward.points
+                    })
 
         return recommended_rewards
 

@@ -117,3 +117,10 @@ To use and test RewardsService, run this:
 ```sh
 make rewards
 ```
+
+
+
+# Added notes
+
+This project now requires that you run `make postgres` (or do not run `make rabbit` and instead run `make services`) to
+launch our postgres service.

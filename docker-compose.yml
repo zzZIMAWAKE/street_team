@@ -10,7 +10,7 @@ services:
       - ./rabbitmq/definitions.json:/opt/definitions.json:ro
       - ./rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
 
-  PostgreSQL:
+  postgres:
       restart: always
       image: "sameersbn/postgresql:9.6-2"
       ports:

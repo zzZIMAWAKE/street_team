@@ -8,11 +8,14 @@ install:
 	$(VENV)/bin/pip install -r requirements.txt
 	$(VENV)/bin/alembic upgrade head
 
-setup_db:
-	$(VENV)/bin/python3 src/setup.py
+services:
+	docker-compose up
 
 rabbit:
 	docker-compose up rabbit
+
+postgres:
+	docker-compose up postgres
 
 sales:
 	$(VENV)/bin/python3 src/sales_service.py

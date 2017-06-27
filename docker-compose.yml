@@ -22,4 +22,4 @@ services:
         - DB_PASS=hunter2
         - DB_NAME=backend
       volumes:
-        - /srv/docker/postgresql:/var/lib/postgresql
+        - ./postgres:/var/lib/postgresql
